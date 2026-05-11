@@ -1,0 +1,4 @@
+pyside6
+mysql-connector-python
+bcrypt
+reportlab

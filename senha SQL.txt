@@ -1,0 +1,4 @@
+senha SQL: #Catena202020
+Host: <AllHostel(%)>
+Role: DB Admin
+Login/senha: Admin/123456
