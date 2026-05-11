@@ -10,12 +10,14 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QFrame,
     QHBoxLayout,
-    QApplication
+    QApplication,
+    QGraphicsDropShadowEffect
 )
 
 from PySide6.QtGui import (
     QPixmap,
-    QIcon
+    QIcon,
+    QColor
 )
 
 from PySide6.QtCore import Qt
@@ -23,279 +25,390 @@ from PySide6.QtCore import Qt
 from app.auth import verificar_login
 
 
-# ==========================================
+# ==================================================
 # RESOURCE PATH
-# ==========================================
+# ==================================================
 def resource_path(relative_path):
-    """
-    Retorna caminho absoluto compatível
-    com ambiente dev e executável (.exe)
-    """
+
     try:
         base_path = sys._MEIPASS
+
     except Exception:
+
         base_path = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..")
+            os.path.join(
+                os.path.dirname(__file__),
+                ".."
+            )
         )
 
-    return os.path.join(base_path, relative_path)
+    return os.path.join(
+        base_path,
+        relative_path
+    )
 
 
-# ==========================================
+# ==================================================
 # LOGIN WINDOW
-# ==========================================
+# ==================================================
 class LoginWindow(QWidget):
 
     def __init__(self):
+
         super().__init__()
 
         self.setup_ui()
 
-    # ==========================================
-    # INTERFACE
-    # ==========================================
+    # ==================================================
+    # UI
+    # ==================================================
     def setup_ui(self):
 
-        self.setWindowTitle("Sistema Almoxarifado")
-        self.resize(450, 500)
+        self.setWindowTitle(
+            "Sistema Almoxarifado"
+        )
 
+        self.resize(500, 620)
+
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #0F172A;
+                font-family: Segoe UI;
+                color: white;
+            }
+        """)
+
+        # ==================================================
         # ÍCONE
-        icon_path = resource_path("assets/logo.ico")
+        # ==================================================
+        icon_path = resource_path(
+            "assets/logo.ico"
+        )
 
         if os.path.exists(icon_path):
-            self.setWindowIcon(QIcon(icon_path))
 
+            self.setWindowIcon(
+                QIcon(icon_path)
+            )
+
+        # ==================================================
         # LAYOUT PRINCIPAL
+        # ==================================================
         layout = QVBoxLayout(self)
 
-        layout.setContentsMargins(40, 30, 40, 30)
-        layout.setSpacing(15)
+        layout.setContentsMargins(
+            40,
+            40,
+            40,
+            40
+        )
 
-        # ==========================================
-        # CARD
-        # ==========================================
+        layout.setSpacing(20)
+
+        layout.addStretch()
+
+        # ==================================================
+        # CARD LOGIN
+        # ==================================================
         card = QFrame()
 
         card.setObjectName("card")
 
-        card.setStyleSheet("""
-            QWidget {
-                background-color: #f3f4f6;
-            }
+        card.setFixedWidth(420)
 
+        card.setStyleSheet("""
             QFrame#card {
-                background-color: white;
-                border-radius: 20px;
-                border: 1px solid #d1d5db;
+                background-color: #111827;
+                border-radius: 24px;
+                border: 1px solid #1F2937;
             }
 
             QLineEdit {
-                padding: 12px;
-                border: 1px solid #cbd5e1;
-                border-radius: 10px;
+                background-color: #1F2937;
+                border: 1px solid #374151;
+                border-radius: 14px;
+                padding: 14px;
                 font-size: 14px;
-                background: white;
+                color: white;
             }
 
             QLineEdit:focus {
-                border: 2px solid #2563eb;
+                border: 2px solid #2563EB;
             }
 
             QPushButton {
-                background-color: #2563eb;
-                color: white;
+                background-color: #2563EB;
                 border: none;
-                border-radius: 10px;
-                padding: 12px;
-                font-size: 14px;
+                border-radius: 14px;
+                padding: 14px;
+                font-size: 15px;
                 font-weight: bold;
+                color: white;
             }
 
             QPushButton:hover {
-                background-color: #1d4ed8;
+                background-color: #1D4ED8;
             }
 
             QPushButton:pressed {
-                background-color: #1e40af;
+                background-color: #1E40AF;
             }
         """)
 
+        # ==================================================
+        # SOMBRA
+        # ==================================================
+        sombra = QGraphicsDropShadowEffect()
+
+        sombra.setBlurRadius(35)
+
+        sombra.setOffset(0, 0)
+
+        sombra.setColor(
+            QColor(0, 0, 0, 180)
+        )
+
+        card.setGraphicsEffect(sombra)
+
+        # ==================================================
+        # LAYOUT CARD
+        # ==================================================
         card_layout = QVBoxLayout(card)
 
-        card_layout.setContentsMargins(35, 35, 35, 35)
+        card_layout.setContentsMargins(
+            40,
+            40,
+            40,
+            40
+        )
+
         card_layout.setSpacing(18)
 
-        # ==========================================
+        # ==================================================
         # LOGO
-        # ==========================================
+        # ==================================================
         self.logo = QLabel()
-        self.logo.setAlignment(Qt.AlignCenter)
 
-        caminho_logo = resource_path("assets/logo.jpg")
+        self.logo.setAlignment(
+            Qt.AlignCenter
+        )
+
+        caminho_logo = resource_path(
+            "assets/logo.jpg"
+        )
 
         if os.path.exists(caminho_logo):
 
-            pixmap = QPixmap(caminho_logo)
+            pixmap = QPixmap(
+                caminho_logo
+            )
 
             if not pixmap.isNull():
 
                 pixmap = pixmap.scaled(
-                    250,
-                    150,
+                    260,
+                    160,
                     Qt.KeepAspectRatio,
                     Qt.SmoothTransformation
                 )
 
-                self.logo.setPixmap(pixmap)
-
-            else:
-                self.logo.setText("ERRO AO CARREGAR LOGO")
-                self.logo.setStyleSheet("""
-                    color: red;
-                    font-weight: bold;
-                    font-size: 16px;
-                """)
+                self.logo.setPixmap(
+                    pixmap
+                )
 
         else:
+
             self.logo.setText("CATENA")
+
             self.logo.setStyleSheet("""
-                font-size: 28px;
+                font-size: 34px;
                 font-weight: bold;
-                color: #111827;
+                color: #2563EB;
             """)
 
         card_layout.addWidget(self.logo)
 
-        # ==========================================
+        # ==================================================
         # TÍTULO
-        # ==========================================
-        titulo = QLabel("Sistema de Almoxarifado")
+        # ==================================================
+        titulo = QLabel(
+            "Sistema de Almoxarifado"
+        )
 
-        titulo.setAlignment(Qt.AlignCenter)
+        titulo.setAlignment(
+            Qt.AlignCenter
+        )
 
         titulo.setStyleSheet("""
-            font-size: 22px;
+            font-size: 28px;
             font-weight: bold;
-            color: #111827;
+            color: white;
         """)
 
         card_layout.addWidget(titulo)
 
-        # ==========================================
+        # ==================================================
         # SUBTÍTULO
-        # ==========================================
+        # ==================================================
         subtitulo = QLabel(
-            "Controle de materiais, saídas e estoque"
+            "Controle inteligente de materiais"
         )
 
-        subtitulo.setAlignment(Qt.AlignCenter)
+        subtitulo.setAlignment(
+            Qt.AlignCenter
+        )
 
         subtitulo.setStyleSheet("""
-            color: #6b7280;
-            font-size: 12px;
-            margin-bottom: 10px;
+            color: #9CA3AF;
+            font-size: 13px;
+            margin-bottom: 15px;
         """)
 
         card_layout.addWidget(subtitulo)
 
-        # ==========================================
+        # ==================================================
         # LOGIN
-        # ==========================================
+        # ==================================================
         self.txt_login = QLineEdit()
 
-        self.txt_login.setPlaceholderText("Digite seu usuário")
+        self.txt_login.setPlaceholderText(
+            "Usuário"
+        )
 
-        card_layout.addWidget(self.txt_login)
+        card_layout.addWidget(
+            self.txt_login
+        )
 
-        # ==========================================
+        # ==================================================
         # SENHA
-        # ==========================================
+        # ==================================================
         self.txt_senha = QLineEdit()
 
-        self.txt_senha.setPlaceholderText("Digite sua senha")
+        self.txt_senha.setPlaceholderText(
+            "Senha"
+        )
 
-        self.txt_senha.setEchoMode(QLineEdit.Password)
+        self.txt_senha.setEchoMode(
+            QLineEdit.Password
+        )
 
-        card_layout.addWidget(self.txt_senha)
+        card_layout.addWidget(
+            self.txt_senha
+        )
 
-        # ==========================================
-        # BOTÃO LOGIN
-        # ==========================================
-        self.btn_login = QPushButton("🔐 Entrar")
+        # ==================================================
+        # BOTÃO
+        # ==================================================
+        self.btn_login = QPushButton(
+            "🔐 Entrar"
+        )
 
-        self.btn_login.setCursor(Qt.PointingHandCursor)
+        self.btn_login.setCursor(
+            Qt.PointingHandCursor
+        )
 
-        self.btn_login.clicked.connect(self.logar)
+        self.btn_login.clicked.connect(
+            self.logar
+        )
 
-        card_layout.addWidget(self.btn_login)
+        card_layout.addWidget(
+            self.btn_login
+        )
 
-        # ==========================================
+        # ==================================================
         # RODAPÉ
-        # ==========================================
-        rodape = QLabel("© CATENA Tecnologia")
+        # ==================================================
+        rodape = QLabel(
+            "© CATENA Tecnologia"
+        )
 
-        rodape.setAlignment(Qt.AlignCenter)
+        rodape.setAlignment(
+            Qt.AlignCenter
+        )
 
         rodape.setStyleSheet("""
-            color: #9ca3af;
+            color: #6B7280;
             font-size: 11px;
-            margin-top: 5px;
+            margin-top: 10px;
         """)
 
-        card_layout.addWidget(rodape)
+        card_layout.addWidget(
+            rodape
+        )
 
-        # ==========================================
+        # ==================================================
         # ENTER
-        # ==========================================
-        self.txt_login.returnPressed.connect(self.logar)
-        self.txt_senha.returnPressed.connect(self.logar)
+        # ==================================================
+        self.txt_login.returnPressed.connect(
+            self.logar
+        )
 
-        # ==========================================
+        self.txt_senha.returnPressed.connect(
+            self.logar
+        )
+
+        # ==================================================
         # CENTRALIZAÇÃO
-        # ==========================================
-        layout.addStretch()
-
+        # ==================================================
         hbox = QHBoxLayout()
+
         hbox.addStretch()
+
         hbox.addWidget(card)
+
         hbox.addStretch()
 
         layout.addLayout(hbox)
 
         layout.addStretch()
 
-        # Foco inicial
+        # ==================================================
+        # FOCO
+        # ==================================================
         self.txt_login.setFocus()
 
-    # ==========================================
+    # ==================================================
     # LOGIN
-    # ==========================================
+    # ==================================================
     def logar(self):
 
-        usuario_texto = self.txt_login.text().strip()
-        senha_texto = self.txt_senha.text()
+        usuario_texto = (
+            self.txt_login.text().strip()
+        )
 
-        # VALIDAÇÕES
+        senha_texto = (
+            self.txt_senha.text()
+        )
+
         if not usuario_texto:
+
             QMessageBox.warning(
                 self,
                 "Atenção",
                 "Digite o usuário."
             )
+
             self.txt_login.setFocus()
+
             return
 
         if not senha_texto:
+
             QMessageBox.warning(
                 self,
                 "Atenção",
                 "Digite a senha."
             )
+
             self.txt_senha.setFocus()
+
             return
 
         try:
-            QApplication.setOverrideCursor(Qt.WaitCursor)
+
+            QApplication.setOverrideCursor(
+                Qt.WaitCursor
+            )
 
             usuario = verificar_login(
                 usuario_texto,
@@ -308,7 +421,9 @@ class LoginWindow(QWidget):
 
                 from ui.dashboard import DashboardWindow
 
-                self.dashboard = DashboardWindow(usuario)
+                self.dashboard = DashboardWindow(
+                    usuario
+                )
 
                 self.dashboard.show()
 
@@ -323,6 +438,7 @@ class LoginWindow(QWidget):
                 )
 
                 self.txt_senha.clear()
+
                 self.txt_senha.setFocus()
 
         except Exception as e:

@@ -6,7 +6,12 @@ from PySide6.QtWidgets import (
     QMessageBox
 )
 
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import (
+    QIcon,
+    QFont
+)
+
+from PySide6.QtCore import Qt
 
 from ui.login import LoginWindow
 
@@ -14,29 +19,83 @@ from app.style import get_style
 from app.logger import get_logger
 
 
+# =====================================================
+# LOGGER
+# =====================================================
 logger = get_logger(__name__)
 
 
+# =====================================================
+# CONFIGURAÇÕES
+# =====================================================
 APP_NAME = "Controle de Almoxarifado"
-APP_THEME = "light"
+
+# "dark" ou "light"
+APP_THEME = "dark"
+
+APP_VERSION = "1.0.0"
 
 
-def configurar_app(app):
+# =====================================================
+# RESOURCE PATH
+# =====================================================
+def resource_path(relative_path):
 
-    app.setApplicationName(
-        APP_NAME
+    try:
+
+        base_path = sys._MEIPASS
+
+    except Exception:
+
+        base_path = os.path.abspath(".")
+
+    return os.path.join(
+        base_path,
+        relative_path
     )
 
+
+# =====================================================
+# CONFIGURAR APP
+# =====================================================
+def configurar_app(app):
+
+    # ==============================================
+    # DADOS APP
+    # ==============================================
+    app.setApplicationName(APP_NAME)
+
+    app.setApplicationVersion(APP_VERSION)
+
+    app.setOrganizationName("CATENA")
+
+    # ==============================================
+    # ESTILO QT
+    # ==============================================
     app.setStyle("Fusion")
 
+    # ==============================================
+    # FONTE GLOBAL
+    # ==============================================
+    fonte = QFont(
+        "Segoe UI",
+        10
+    )
+
+    app.setFont(fonte)
+
+    # ==============================================
+    # TEMA
+    # ==============================================
     app.setStyleSheet(
         get_style(APP_THEME)
     )
 
+    # ==============================================
     # ÍCONE
-    caminho_icone = os.path.join(
-        "assets",
-        "icon.png"
+    # ==============================================
+    caminho_icone = resource_path(
+        "assets/icon.png"
     )
 
     if os.path.exists(caminho_icone):
@@ -45,25 +104,55 @@ def configurar_app(app):
             QIcon(caminho_icone)
         )
 
+    # ==============================================
+    # CURSOR
+    # ==============================================
+    app.setCursorFlashTime(1000)
 
+    # ==============================================
+    # HIGH DPI
+    # ==============================================
+    QApplication.setAttribute(
+        Qt.AA_EnableHighDpiScaling,
+        True
+    )
+
+    QApplication.setAttribute(
+        Qt.AA_UseHighDpiPixmaps,
+        True
+    )
+
+
+# =====================================================
+# MAIN
+# =====================================================
 def main():
 
     app = None
 
     try:
 
+        # ==========================================
+        # QApplication
+        # ==========================================
         app = QApplication(sys.argv)
 
         configurar_app(app)
 
         logger.info(
-            "Aplicação iniciada"
+            f"{APP_NAME} iniciado"
         )
 
+        # ==========================================
+        # LOGIN
+        # ==========================================
         janela = LoginWindow()
 
         janela.show()
 
+        # ==========================================
+        # EXEC
+        # ==========================================
         sys.exit(app.exec())
 
     except Exception as e:
@@ -72,7 +161,9 @@ def main():
             f"Erro fatal aplicação: {e}"
         )
 
+        # ==========================================
         # ERRO VISUAL
+        # ==========================================
         if app:
 
             QMessageBox.critical(
@@ -88,5 +179,9 @@ def main():
         raise
 
 
+# =====================================================
+# START
+# =====================================================
 if __name__ == "__main__":
+
     main()

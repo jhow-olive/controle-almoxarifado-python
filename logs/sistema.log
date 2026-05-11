@@ -34,3 +34,25 @@
 2026-05-11 15:02:56,359 | INFO | app.db | Conexão com banco estabelecida
 2026-05-11 15:02:56,615 | INFO | app.auth | Login realizado com sucesso: admin
 2026-05-11 15:02:57,452 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:02:32,670 | INFO | __main__ | Aplicação iniciada
+2026-05-11 17:02:43,022 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:02:43,311 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-11 17:02:44,668 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:04:35,918 | INFO | __main__ | Aplicação iniciada
+2026-05-11 17:04:43,315 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:04:43,569 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-11 17:04:44,437 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:15:45,150 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-11 17:15:52,901 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:15:53,155 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-11 17:15:54,052 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:17:26,503 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-11 17:17:32,125 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:17:32,381 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-11 17:17:33,263 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:17:57,220 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:18:01,360 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:18:04,943 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:18:04,980 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:18:07,166 | INFO | app.db | Conexão com banco estabelecida
+2026-05-11 17:18:07,189 | ERROR | app.historico_service | Erro ao listar histórico: 1054 (42S22): Unknown column 'h.descricao' in 'field list'
