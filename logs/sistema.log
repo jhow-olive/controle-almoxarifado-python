@@ -56,3 +56,20 @@
 2026-05-11 17:18:04,980 | INFO | app.db | Conexão com banco estabelecida
 2026-05-11 17:18:07,166 | INFO | app.db | Conexão com banco estabelecida
 2026-05-11 17:18:07,189 | ERROR | app.historico_service | Erro ao listar histórico: 1054 (42S22): Unknown column 'h.descricao' in 'field list'
+2026-05-12 16:16:12,251 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-12 16:16:29,048 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:16:29,323 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-12 16:20:08,355 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-12 16:20:19,170 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:20:19,424 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-12 16:20:20,356 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:22:52,679 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-12 16:22:59,598 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:22:59,852 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-12 16:23:00,757 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:23:25,073 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:23:34,065 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:25:37,646 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260512_162537.pdf
+2026-05-12 16:26:07,364 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-05-12 16:26:07,814 | INFO | app.backup | Backup gerado com sucesso: backup\20260512_162607.sql
+2026-05-12 16:26:10,695 | INFO | ui.dashboard | Backup gerado: backup\20260512_162607.sql

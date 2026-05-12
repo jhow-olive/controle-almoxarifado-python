@@ -12,7 +12,8 @@ from PySide6.QtWidgets import (
     QFrame,
     QMessageBox,
     QDateEdit,
-    QSizePolicy
+    QSizePolicy,
+    QGridLayout
 )
 
 from PySide6.QtGui import QPixmap, Qt
@@ -141,12 +142,15 @@ class GraficoSaidas(FigureCanvas):
                 datas,
                 valores,
                 marker="o",
-                linewidth=3
+                linewidth=3,
+                color="#3B82F6"
             )
 
-            self.ax.set_title(
-                "Saídas por Dia",
-                fontsize=14
+            self.ax.fill_between(
+                datas,
+                valores,
+                alpha=0.2,
+                color="#3B82F6"
             )
 
             self.ax.set_xlabel("Data")
@@ -217,20 +221,22 @@ class DashboardWindow(QWidget):
             }
 
             QPushButton {
-                background-color: #2563EB;
-                border: none;
-                border-radius: 12px;
-                padding: 12px;
-                font-weight: bold;
-                color: white;
+                background-color: transparent;
+                text-align: left;
+                padding: 16px;
+                border-radius: 14px;
+                font-size: 15px;
+                color: #E2E8F0;
+                font-weight: 600;
             }
 
             QPushButton:hover {
-                background-color: #1D4ED8;
+                background-color: #1E293B;
+                border-left: 4px solid #3B82F6;
             }
 
             QPushButton:pressed {
-                background-color: #1E40AF;
+                background-color: #2563EB;
             }
 
             QDateEdit {
@@ -403,6 +409,46 @@ class DashboardWindow(QWidget):
         area.setSpacing(20)
 
         # =================================================
+        # TOPBAR
+        # =================================================
+        topbar = QFrame()
+
+        topbar.setFixedHeight(70)
+
+        topbar.setStyleSheet("""
+            QFrame {
+                background-color: #1E293B;
+                border-radius: 18px;
+            }
+        """)
+
+        topbar_layout = QHBoxLayout(topbar)
+
+        titulo_topo = QLabel("Bem-vindo ao Sistema")
+
+        titulo_topo.setStyleSheet("""
+            font-size: 18px;
+            font-weight: bold;
+        """)
+
+        usuario_topo = QLabel(
+            f"👤 {self.usuario}"
+        )
+
+        usuario_topo.setStyleSheet("""
+            color: #94A3B8;
+            font-size: 14px;
+        """)
+
+        topbar_layout.addWidget(titulo_topo)
+
+        topbar_layout.addStretch()
+
+        topbar_layout.addWidget(usuario_topo)
+
+        area.addWidget(topbar)
+
+        # =================================================
         # TÍTULO
         # =================================================
         titulo = QLabel("Dashboard Executivo")
@@ -424,63 +470,42 @@ class DashboardWindow(QWidget):
         area.addWidget(titulo)
         area.addWidget(subtitulo)
 
+
         # =================================================
-        # CARDS
+        # CARDS PREMIUM
         # =================================================
-        cards_layout = QHBoxLayout()
+        cards_layout = QGridLayout()
 
-        cards = [
-            ("📦 Materiais", "245"),
-            ("🚚 Em Uso", "38"),
-            ("⚠ Pendências", "12"),
-            ("👤 Usuários", "7")
-        ]
+        cards_layout.setSpacing(20)
 
-        for titulo_card, valor in cards:
+        card1 = self.criar_card(
+            "📦 Materiais",
+            "245",
+            "#3B82F6"
+        )
 
-            card = QFrame()
+        card2 = self.criar_card(
+            "🚚 Em Uso",
+            "38",
+            "#10B981"
+        )
 
-            card.setMinimumHeight(140)
+        card3 = self.criar_card(
+            "⚠ Pendências",
+            "12",
+            "#F59E0B"
+        )
 
-            card.setSizePolicy(
-                QSizePolicy.Expanding,
-                QSizePolicy.Fixed
-            )
+        card4 = self.criar_card(
+            "👤 Usuários",
+            "7",
+            "#EF4444"
+        )
 
-            card.setStyleSheet("""
-                QFrame {
-                    background-color: #1F2937;
-                    border-radius: 20px;
-                    padding: 15px;
-                }
-
-                QFrame:hover {
-                    border: 2px solid #2563EB;
-                }
-            """)
-
-            card_layout = QVBoxLayout(card)
-
-            titulo_label = QLabel(titulo_card)
-
-            titulo_label.setStyleSheet("""
-                font-size: 14px;
-                color: #9CA3AF;
-            """)
-
-            valor_label = QLabel(valor)
-
-            valor_label.setStyleSheet("""
-                font-size: 32px;
-                font-weight: bold;
-                color: #2563EB;
-            """)
-
-            card_layout.addWidget(titulo_label)
-            card_layout.addSpacing(10)
-            card_layout.addWidget(valor_label)
-
-            cards_layout.addWidget(card)
+        cards_layout.addWidget(card1, 0, 0)
+        cards_layout.addWidget(card2, 0, 1)
+        cards_layout.addWidget(card3, 1, 0)
+        cards_layout.addWidget(card4, 1, 1)
 
         area.addLayout(cards_layout)
 
@@ -577,6 +602,68 @@ class DashboardWindow(QWidget):
         area.addWidget(grafico_frame)
 
         layout.addWidget(area_widget)
+
+    # =================================================
+    # 🎴 CARD PREMIUM
+    # =================================================
+    def criar_card(self, titulo, valor, cor="#2563EB"):
+
+        card = QFrame()
+
+        card.setMinimumHeight(150)
+
+        card.setStyleSheet(f"""
+            QFrame {{
+                background-color: #1E293B;
+                border-radius: 22px;
+                border: 1px solid #334155;
+            }}
+
+            QFrame:hover {{
+                border: 2px solid {cor};
+            }}
+        """)
+
+        layout = QVBoxLayout(card)
+
+        layout.setContentsMargins(20, 20, 20, 20)
+
+        titulo_label = QLabel(titulo)
+
+        titulo_label.setStyleSheet("""
+            color: #94A3B8;
+            font-size: 14px;
+            font-weight: 500;
+        """)
+
+        valor_label = QLabel(str(valor))
+
+        valor_label.setStyleSheet(f"""
+            color: {cor};
+            font-size: 38px;
+            font-weight: bold;
+        """)
+
+        linha = QFrame()
+
+        linha.setFixedHeight(4)
+
+        linha.setStyleSheet(f"""
+            background-color: {cor};
+            border-radius: 2px;
+        """)
+
+        layout.addWidget(titulo_label)
+
+        layout.addSpacing(10)
+
+        layout.addWidget(valor_label)
+
+        layout.addStretch()
+
+        layout.addWidget(linha)
+
+        return card
 
     # =================================================
     # 🔍 FILTRO
