@@ -7,22 +7,20 @@ logger = get_logger(__name__)
 
 def registrar(
     usuario_id,
+    entidade,
+    entidade_id,
     acao,
-    entidade=None,
-    entidade_id=None,
     dados_antes=None,
     dados_depois=None
 ):
-    conn = None
+
+    conn = conectar()
 
     try:
 
-        conn = conectar()
-
         cur = conn.cursor()
 
-        cur.execute(
-            """
+        cur.execute("""
             INSERT INTO historico (
                 usuario_id,
                 entidade,
@@ -32,74 +30,43 @@ def registrar(
                 dados_depois
             )
             VALUES (%s,%s,%s,%s,%s,%s)
-            """,
-            (
-                usuario_id,
-                entidade,
-                entidade_id,
-                acao,
-                dados_antes,
-                dados_depois
-            )
-        )
+        """, (
+            usuario_id,
+            entidade,
+            entidade_id,
+            acao,
+            dados_antes,
+            dados_depois
+        ))
 
         conn.commit()
 
-    except Exception as e:
-
-        if conn:
-            conn.rollback()
-
-        logger.error(
-            f"Erro ao registrar histórico: {e}"
-        )
-
     finally:
-
-        if conn:
-            conn.close()
+        conn.close()
 
 
 def listar_historico():
-    conn = None
+
+    conn = conectar()
 
     try:
-        conn = conectar()
 
         cur = conn.cursor(dictionary=True)
 
-        cur.execute(
-            """
+        cur.execute("""
             SELECT
                 h.id,
-                COALESCE(u.nome, 'Sistema') AS usuario,
+                COALESCE(u.nome,'Sistema') usuario,
+                h.entidade,
                 h.acao,
-                h.descricao,
                 h.data_hora
             FROM historico h
             LEFT JOIN usuarios u
                 ON u.id = h.usuario_id
             ORDER BY h.data_hora DESC
-            """
-        )
+        """)
 
-        dados = cur.fetchall()
-
-        logger.info(
-            f"Histórico carregado: {len(dados)} registros"
-        )
-
-        return dados
-
-    except Exception as e:
-
-        logger.error(
-            f"Erro ao listar histórico: {e}"
-        )
-
-        return []
+        return cur.fetchall()
 
     finally:
-
-        if conn:
-            conn.close()
+        conn.close()

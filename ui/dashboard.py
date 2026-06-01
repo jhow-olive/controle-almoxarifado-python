@@ -1,6 +1,8 @@
 import os
 import sys
 import tempfile
+import subprocess
+import platform
 from datetime import datetime
 
 from PySide6.QtWidgets import (
@@ -12,7 +14,6 @@ from PySide6.QtWidgets import (
     QFrame,
     QMessageBox,
     QDateEdit,
-    QSizePolicy,
     QGridLayout
 )
 
@@ -39,6 +40,7 @@ from ui.historico import HistoricoWindow
 from app.backup import gerar_backup
 from app.db import conectar
 from app.logger import get_logger
+
 
 logger = get_logger(__name__)
 
@@ -156,7 +158,7 @@ def obter_indicadores():
         cur.execute("""
             SELECT COUNT(*)
             FROM materiais
-            WHERE quantidade_disponivel <= estoque_minimo
+            WHERE quantidade_disponivel <= COALESCE(estoque_minimo,5)
         """)
 
         indicadores["criticos"] = cur.fetchone()[0]
@@ -234,6 +236,17 @@ class GraficoSaidas(FigureCanvas):
 
             self.ax.set_ylabel("Quantidade")
 
+            self.ax.set_title(
+                "Saídas por Dia",
+                color="white",
+                fontsize=14
+            )
+
+            self.ax.tick_params(
+                axis="x",
+                rotation=45
+            )
+
             self.ax.grid(
                 True,
                 linestyle="--",
@@ -252,7 +265,7 @@ class GraficoSaidas(FigureCanvas):
                 fontsize=16
             )
 
-        self.fig.tight_layout()
+        self.fig.tight_layout(pad=3)
 
         self.draw()
 
@@ -279,6 +292,8 @@ class DashboardWindow(QWidget):
         self.aplicar_estilo()
 
         self.aplicar_filtro()
+
+        self.atualizar_dashboard()
 
     # =================================================
     # 🎨 ESTILO
@@ -418,8 +433,9 @@ class DashboardWindow(QWidget):
             ("📦 Materiais", self.abrir_materiais),
             ("🚚 Saída", self.abrir_saida),
             ("↩ Retorno", self.abrir_retorno),
-            ("📜 Histórico", self.abrir_historico),
+            ("🚗 Veículos", self.abrir_veiculos),
             ("👥 Usuários", self.abrir_usuarios),
+            ("📜 Histórico", self.abrir_historico),
             ("💾 Backup", self.fazer_backup),
             ("📄 Exportar PDF", self.exportar_pdf),
         ]
@@ -456,8 +472,14 @@ class DashboardWindow(QWidget):
         # =================================================
         # USUÁRIO
         # =================================================
-        usuario_label = QLabel(
-            f"Usuário: {self.usuario}"
+        nome_usuario = (
+            self.usuario["nome"]
+            if isinstance(self.usuario, dict)
+            else str(self.usuario)
+        )
+
+        usuario_topo = QLabel(
+            f"👤 {nome_usuario}"
         )
 
         usuario_label.setStyleSheet("""
@@ -509,8 +531,8 @@ class DashboardWindow(QWidget):
             font-weight: bold;
         """)
 
-        usuario_topo = QLabel(
-            f"👤 {self.usuario}"
+        usuario_label = QLabel(
+            f"Usuário: {nome_usuario}"
         )
 
         usuario_topo.setStyleSheet("""
@@ -554,35 +576,58 @@ class DashboardWindow(QWidget):
         # =================================================
         indicadores = obter_indicadores()
 
-        card1 = self.criar_card(
+        card1, self.lbl_materiais = self.criar_card(
             "📦 Materiais",
             indicadores["materiais"],
             "#3B82F6"
         )
-
-        card2 = self.criar_card(
+        
+                
+        card2, self.lbl_em_uso = self.criar_card(
             "🚚 Saídas Abertas",
             indicadores["em_uso"],
             "#10B981"
         )
 
-        card3 = self.criar_card(
+        card3, self.lbl_pendencias = self.criar_card(
             "⚠ Pendências",
             indicadores["pendencias"],
             "#F59E0B"
         )
 
-        card4 = self.criar_card(
+        card4, self.lbl_veiculos = self.criar_card(
             "🚗 Veículos",
             indicadores["veiculos"],
             "#EF4444"
         )
 
-        card5 = self.criar_card(
+        card5, self.lbl_usuarios = self.criar_card(
+            "👥 Usuários",
+            indicadores["usuarios"],
+            "#8B5CF6"
+        )
+
+        card6, self.lbl_criticos = self.criar_card(
             "⚠ Estoque Crítico",
             indicadores["criticos"],
             "#DC2626"
         )
+    
+
+        cards_layout = QGridLayout()
+        
+        cards_layout.setHorizontalSpacing(20)
+        cards_layout.setVerticalSpacing(20)
+
+        cards_layout.addWidget(card1, 0, 0)
+        cards_layout.addWidget(card2, 0, 1)
+        cards_layout.addWidget(card3, 0, 2)
+
+        cards_layout.addWidget(card4, 1, 0)
+        cards_layout.addWidget(card5, 1, 1)
+        cards_layout.addWidget(card6, 1, 2)
+
+        area.addLayout(cards_layout)
 
         # =================================================
         # FILTROS
@@ -604,7 +649,7 @@ class DashboardWindow(QWidget):
         )
 
         self.data_inicio.setDate(
-            QDate.currentDate().addMonths(-1)
+            QDate.currentDate().addMonths(-6)
         )
 
         self.data_fim = QDateEdit(
@@ -670,9 +715,12 @@ class DashboardWindow(QWidget):
 
         self.grafico = GraficoSaidas()
 
+        self.grafico.setMinimumHeight(450)
+
         grafico_layout.addWidget(
             self.grafico
         )
+
 
         area.addWidget(grafico_frame)
 
@@ -738,7 +786,7 @@ class DashboardWindow(QWidget):
 
         layout.addWidget(linha)
 
-        return card
+        return card, valor_label
 
     # =================================================
     # 🔍 FILTRO
@@ -803,9 +851,25 @@ class DashboardWindow(QWidget):
                 )
             )
 
+            elementos.append(Spacer(1,20))
+
+            indicadores = obter_indicadores()
+
             elementos.append(
-                Spacer(1, 20)
+                Paragraph(
+                    f"""
+                    <b>Materiais:</b> {indicadores['materiais']}<br/>
+                    <b>Saídas abertas:</b> {indicadores['em_uso']}<br/>
+                    <b>Pendências:</b> {indicadores['pendencias']}<br/>
+                    <b>Usuários:</b> {indicadores['usuarios']}<br/>
+                    <b>Veículos:</b> {indicadores['veiculos']}<br/>
+                    <b>Estoque crítico:</b> {indicadores['criticos']}
+                    """,
+                    styles["BodyText"]
+                )
             )
+
+            elementos.append(Spacer(1,20))
 
             with tempfile.NamedTemporaryFile(
                 delete=False,
@@ -834,7 +898,14 @@ class DashboardWindow(QWidget):
             except Exception:
                 pass
 
-            os.startfile(arquivo_pdf)
+            if platform.system() == "Windows":
+                os.startfile(arquivo_pdf)
+
+            elif platform.system() == "Darwin":
+                subprocess.Popen(["open", arquivo_pdf])
+
+            else:
+                subprocess.Popen(["xdg-open", arquivo_pdf])
 
             logger.info(
                 f"PDF gerado: {arquivo_pdf}"
@@ -865,9 +936,13 @@ class DashboardWindow(QWidget):
 
         from ui.materiais import MateriaisWindow
 
-        self.materiais_window = MateriaisWindow()
+        self.materiais_window = MateriaisWindow(self.usuario)
 
         self.materiais_window.show()
+
+        self.materiais_window.destroyed.connect(
+            self.atualizar_dashboard
+        )
 
     def abrir_saida(self):
 
@@ -877,23 +952,62 @@ class DashboardWindow(QWidget):
 
         self.saida_window.show()
 
+        self.saida_window.destroyed.connect(
+            lambda: (
+                self.atualizar_dashboard(),
+                self.aplicar_filtro()
+            )
+        )
+
     def abrir_retorno(self):
 
-        self.retorno_window = RetornoWindow()
+        self.retorno_window = SaidaWindow(
+            self.usuario
+        )
 
         self.retorno_window.show()
 
+        self.retorno_window.destroyed.connect(
+            self.atualizar_dashboard
+        )
+
     def abrir_historico(self):
 
-        self.historico_window = HistoricoWindow()
+        self.historico_window = SaidaWindow(
+            self.usuario
+        )
 
         self.historico_window.show()
+
+        self.historico_window.destroyed.connect(
+            self.atualizar_dashboard
+        )
 
     def abrir_usuarios(self):
         from ui.usuarios import UsuariosWindow
 
-        self.usuarios_window = UsuariosWindow()
+        self.usuarios_window = SaidaWindow(
+            self.usuario
+        )
+
         self.usuarios_window.show()
+
+        self.usuarios_window.destroyed.connect(
+            self.atualizar_dashboard
+        )
+
+    def abrir_veiculos(self):
+        from ui.veiculos import VeiculosWindow
+
+        self.veiculo_window = SaidaWindow(
+            self.usuario
+        )
+
+        self.veiculo_window.show()
+
+        self.veiculo_window.destroyed.connect(
+            self.atualizar_dashboard
+        )
 
     # =================================================
     # 💾 BACKUP
@@ -925,3 +1039,38 @@ class DashboardWindow(QWidget):
                 "Erro",
                 str(e)
             )
+
+    def atualizar_dashboard(self):
+
+        indicadores = obter_indicadores()
+
+        if hasattr(self, "lbl_materiais"):
+            self.lbl_materiais.setText(
+                str(indicadores["materiais"])
+        )
+
+        if hasattr(self, "lbl_em_uso"):
+            self.lbl_em_uso.setText(
+                str(indicadores["em_uso"])
+        )
+
+        if hasattr(self, "lbl_pendencias"):
+            self.lbl_pendencias.setText(
+                str(indicadores["pendencias"])
+        )
+
+        if hasattr(self, "lbl_veiculos"):
+            self.lbl_veiculos.setText(
+                str(indicadores["veiculos"])
+        )
+
+        if hasattr(self, "lbl_usuarios"):
+            self.lbl_usuarios.setText(
+                str(indicadores["usuarios"])
+            )
+
+        if hasattr(self, "lbl_criticos"):
+            self.lbl_criticos.setText(
+                str(indicadores["criticos"])
+            )
+      

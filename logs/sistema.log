@@ -134,3 +134,19 @@
 2026-06-01 13:40:07,620 | INFO | app.backup | Backup gerado com sucesso: backup\20260601_134007.sql
 2026-06-01 13:40:09,576 | INFO | ui.dashboard | Backup gerado: backup\20260601_134007.sql
 2026-06-01 13:40:13,067 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260601_134012.pdf
+2026-06-01 15:17:44,877 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 15:17:56,363 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:17:56,621 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 15:17:57,824 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:17:57,902 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:17:57,993 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:47:41,848 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 15:47:48,645 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:47:48,931 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 15:47:59,148 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:47:59,413 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 15:48:13,408 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:48:13,680 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 15:51:24,483 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 15:51:32,513 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 15:51:32,785 | INFO | app.auth | Login realizado com sucesso: admin
