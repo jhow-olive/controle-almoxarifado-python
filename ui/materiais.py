@@ -20,8 +20,9 @@ from app.db import conectar
 
 class MateriaisWindow(QWidget):
 
-    def __init__(self):
+    def __init__(self, usuario=None):
         super().__init__()
+        self.usuario = usuario
 
         self.setWindowTitle("Materiais")
         self.resize(1200, 700)

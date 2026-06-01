@@ -17,8 +17,9 @@ from app.historico_service import listar_historico
 
 
 class HistoricoWindow(QWidget):
-    def __init__(self):
+    def __init__(self, usuario=None):
         super().__init__()
+        self.usuario = usuario
 
         self.setWindowTitle("Histórico do Sistema")
         self.resize(1000, 600)

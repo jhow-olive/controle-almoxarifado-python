@@ -26,8 +26,9 @@ PADDING = 20
 
 class UsuariosWindow(QWidget):
 
-    def __init__(self):
+    def __init__(self, usuario=None):
         super().__init__()
+        self.usuario = usuario
 
         self.setWindowTitle(
             "Usuários"

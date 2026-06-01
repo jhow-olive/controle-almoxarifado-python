@@ -150,3 +150,32 @@
 2026-06-01 15:51:24,483 | INFO | __main__ | Controle de Almoxarifado iniciado
 2026-06-01 15:51:32,513 | INFO | app.db | Conexão com banco estabelecida
 2026-06-01 15:51:32,785 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 16:15:40,791 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 16:15:47,782 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:15:48,072 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 16:42:23,161 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 16:42:54,766 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:42:55,040 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 16:42:56,395 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:42:56,492 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:42:56,594 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:43:31,196 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:43:31,213 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:43:45,280 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-01 16:43:45,634 | INFO | app.backup | Backup gerado com sucesso: backup\20260601_164345.sql
+2026-06-01 16:43:47,607 | INFO | ui.dashboard | Backup gerado: backup\20260601_164345.sql
+2026-06-01 16:43:49,659 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 16:43:49,990 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260601_164349.pdf
+2026-06-01 16:43:58,578 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:13:01,335 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 17:13:39,519 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:13:39,774 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 17:13:40,983 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:13:41,084 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:13:41,180 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:27:48,591 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 17:29:31,546 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:29:31,802 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 17:29:32,679 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:29:32,750 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 17:29:32,832 | INFO | app.db | Conexão com banco estabelecida

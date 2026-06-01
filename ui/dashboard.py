@@ -17,10 +17,14 @@ from PySide6.QtWidgets import (
     QGridLayout
 )
 
-from PySide6.QtGui import QPixmap, Qt
-from PySide6.QtCore import QDate
+from PySide6.QtWidgets import QScrollArea
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import (
+    Qt,
+    QDate
+)
 
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 from reportlab.platypus import (
@@ -101,11 +105,13 @@ def obter_dados_grafico(data_inicio=None, data_fim=None):
 def obter_indicadores():
 
     indicadores = {
-        "materiais": 0,
-        "em_uso": 0,
-        "usuarios": 0,
-        "veiculos": 0
-    }
+    "materiais": 0,
+    "em_uso": 0,
+    "usuarios": 0,
+    "veiculos": 0,
+    "pendencias": 0,
+    "criticos": 0
+}
 
     conn = conectar()
 
@@ -482,20 +488,34 @@ class DashboardWindow(QWidget):
             f"👤 {nome_usuario}"
         )
 
-        usuario_label.setStyleSheet("""
+        usuario_topo.setStyleSheet("""
             color: #9CA3AF;
             padding: 10px;
             font-size: 13px;
         """)
 
-        menu_layout.addWidget(usuario_label)
+        menu_layout.addWidget(usuario_topo)
 
         layout.addWidget(menu)
 
         # =================================================
         # ÁREA PRINCIPAL
         # =================================================
+        scroll = QScrollArea()
+
+        scroll.setWidgetResizable(True)
+
+        scroll.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarAlwaysOff
+        )
+
+        scroll.setFrameShape(
+            QFrame.NoFrame
+        )
+
         area_widget = QWidget()
+
+        scroll.setWidget(area_widget)
 
         area = QVBoxLayout(area_widget)
 
@@ -530,10 +550,6 @@ class DashboardWindow(QWidget):
             font-size: 18px;
             font-weight: bold;
         """)
-
-        usuario_label = QLabel(
-            f"Usuário: {nome_usuario}"
-        )
 
         usuario_topo.setStyleSheet("""
             color: #94A3B8;
@@ -615,9 +631,20 @@ class DashboardWindow(QWidget):
     
 
         cards_layout = QGridLayout()
-        
+
+        cards_layout.setContentsMargins(
+            0,
+            0,
+            0,
+            0
+        )
+
         cards_layout.setHorizontalSpacing(20)
         cards_layout.setVerticalSpacing(20)
+
+        cards_layout.setColumnStretch(0, 1)
+        cards_layout.setColumnStretch(1, 1)
+        cards_layout.setColumnStretch(2, 1)
 
         cards_layout.addWidget(card1, 0, 0)
         cards_layout.addWidget(card2, 0, 1)
@@ -628,6 +655,12 @@ class DashboardWindow(QWidget):
         cards_layout.addWidget(card6, 1, 2)
 
         area.addLayout(cards_layout)
+
+        cards_layout.setContentsMargins(
+            0, 0, 0, 0
+        )
+
+        cards_layout.setSpacing(20)
 
         # =================================================
         # FILTROS
@@ -715,7 +748,9 @@ class DashboardWindow(QWidget):
 
         self.grafico = GraficoSaidas()
 
-        self.grafico.setMinimumHeight(450)
+        self.grafico.setFixedHeight(380)
+
+        grafico_frame.setFixedHeight(450)
 
         grafico_layout.addWidget(
             self.grafico
@@ -724,7 +759,7 @@ class DashboardWindow(QWidget):
 
         area.addWidget(grafico_frame)
 
-        layout.addWidget(area_widget)
+        layout.addWidget(scroll)
 
     # =================================================
     # 🎴 CARD PREMIUM
@@ -733,7 +768,8 @@ class DashboardWindow(QWidget):
 
         card = QFrame()
 
-        card.setMinimumHeight(150)
+        card.setFixedHeight(140)
+        card.setMinimumWidth(280)
 
         card.setStyleSheet(f"""
             QFrame {{
@@ -749,7 +785,16 @@ class DashboardWindow(QWidget):
 
         layout = QVBoxLayout(card)
 
-        layout.setContentsMargins(20, 20, 20, 20)
+        layout = QVBoxLayout(card)
+
+        layout.setContentsMargins(
+            16,
+            16,
+            16,
+            16
+        )
+
+        layout.setSpacing(8)
 
         titulo_label = QLabel(titulo)
 
@@ -782,7 +827,7 @@ class DashboardWindow(QWidget):
 
         layout.addWidget(valor_label)
 
-        layout.addStretch()
+        layout.addSpacing(10)
 
         layout.addWidget(linha)
 
@@ -792,6 +837,15 @@ class DashboardWindow(QWidget):
     # 🔍 FILTRO
     # =================================================
     def aplicar_filtro(self):
+
+        if not hasattr(self, "data_inicio"):
+            return
+
+        if not hasattr(self, "data_fim"):
+            return
+
+        if not hasattr(self, "grafico"):
+            return
 
         data_inicio = self.data_inicio.date().toString(
             "yyyy-MM-dd"
@@ -941,7 +995,7 @@ class DashboardWindow(QWidget):
         self.materiais_window.show()
 
         self.materiais_window.destroyed.connect(
-            self.atualizar_dashboard
+            lambda *_: self.atualizar_dashboard()
         )
 
     def abrir_saida(self):
@@ -953,60 +1007,59 @@ class DashboardWindow(QWidget):
         self.saida_window.show()
 
         self.saida_window.destroyed.connect(
-            lambda: (
-                self.atualizar_dashboard(),
-                self.aplicar_filtro()
-            )
+            lambda *_: self.recarregar_dashboard()
         )
+
 
     def abrir_retorno(self):
 
-        self.retorno_window = SaidaWindow(
+        self.retorno_window = RetornoWindow(
             self.usuario
         )
 
         self.retorno_window.show()
 
         self.retorno_window.destroyed.connect(
-            self.atualizar_dashboard
+            lambda *_: self.recarregar_dashboard()
         )
 
     def abrir_historico(self):
 
-        self.historico_window = SaidaWindow(
+        self.historico_window = HistoricoWindow(
             self.usuario
         )
 
         self.historico_window.show()
 
         self.historico_window.destroyed.connect(
-            self.atualizar_dashboard
+            lambda *_: self.atualizar_dashboard()
         )
 
     def abrir_usuarios(self):
         from ui.usuarios import UsuariosWindow
 
-        self.usuarios_window = SaidaWindow(
+        self.usuarios_window = UsuariosWindow(
             self.usuario
         )
 
         self.usuarios_window.show()
 
         self.usuarios_window.destroyed.connect(
-            self.atualizar_dashboard
+            lambda *_: self.atualizar_dashboard()
         )
 
     def abrir_veiculos(self):
+
         from ui.veiculos import VeiculosWindow
 
-        self.veiculo_window = SaidaWindow(
+        self.veiculo_window = VeiculosWindow(
             self.usuario
         )
 
         self.veiculo_window.show()
 
         self.veiculo_window.destroyed.connect(
-            self.atualizar_dashboard
+            lambda *_: self.atualizar_dashboard()
         )
 
     # =================================================
@@ -1073,4 +1126,16 @@ class DashboardWindow(QWidget):
             self.lbl_criticos.setText(
                 str(indicadores["criticos"])
             )
+
+    def recarregar_dashboard(self):
+
+        if not self.isVisible():
+            return
+
+        try:
+            self.atualizar_dashboard()
+            self.aplicar_filtro()
+
+        except RuntimeError:
+            pass
       

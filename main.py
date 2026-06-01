@@ -109,19 +109,6 @@ def configurar_app(app):
     # ==============================================
     app.setCursorFlashTime(1000)
 
-    # ==============================================
-    # HIGH DPI
-    # ==============================================
-    QApplication.setAttribute(
-        Qt.AA_EnableHighDpiScaling,
-        True
-    )
-
-    QApplication.setAttribute(
-        Qt.AA_UseHighDpiPixmaps,
-        True
-    )
-
 
 # =====================================================
 # MAIN

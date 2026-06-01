@@ -21,8 +21,9 @@ from app.movimentacao_service import (
 
 
 class RetornoWindow(QWidget):
-    def __init__(self):
+    def __init__(self, usuario=None):
         super().__init__()
+        self.usuario = usuario
 
         self.setWindowTitle("Retorno de Materiais")
         self.resize(500, 430)
