@@ -5,10 +5,18 @@ from app.logger import get_logger
 logger = get_logger(__name__)
 
 
-def registrar(usuario_id, acao, descricao):
+def registrar(
+    usuario_id,
+    acao,
+    entidade=None,
+    entidade_id=None,
+    dados_antes=None,
+    dados_depois=None
+):
     conn = None
 
     try:
+
         conn = conectar()
 
         cur = conn.cursor()
@@ -17,23 +25,25 @@ def registrar(usuario_id, acao, descricao):
             """
             INSERT INTO historico (
                 usuario_id,
+                entidade,
+                entidade_id,
                 acao,
-                descricao
+                dados_antes,
+                dados_depois
             )
-            VALUES (%s, %s, %s)
+            VALUES (%s,%s,%s,%s,%s,%s)
             """,
             (
                 usuario_id,
+                entidade,
+                entidade_id,
                 acao,
-                descricao
+                dados_antes,
+                dados_depois
             )
         )
 
         conn.commit()
-
-        logger.info(
-            f"Histórico registrado: {acao}"
-        )
 
     except Exception as e:
 

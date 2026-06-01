@@ -73,3 +73,64 @@
 2026-05-12 16:26:07,364 | INFO | app.backup | Iniciando backup do banco: almoxarifado
 2026-05-12 16:26:07,814 | INFO | app.backup | Backup gerado com sucesso: backup\20260512_162607.sql
 2026-05-12 16:26:10,695 | INFO | ui.dashboard | Backup gerado: backup\20260512_162607.sql
+2026-05-12 16:37:30,697 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-12 16:37:47,386 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:37:47,640 | WARNING | app.auth | Falha no login: admin
+2026-05-12 16:37:54,997 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 16:37:55,252 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-12 16:37:56,514 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:21:45,373 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-05-12 17:21:50,780 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:21:51,037 | INFO | app.auth | Login realizado com sucesso: admin
+2026-05-12 17:21:52,353 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:21:59,828 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:21:59,842 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:22:21,797 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:22:21,803 | ERROR | app.historico_service | Erro ao listar histórico: 1054 (42S22): Unknown column 'h.descricao' in 'field list'
+2026-05-12 17:22:35,323 | INFO | app.db | Conexão com banco estabelecida
+2026-05-12 17:25:13,371 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 10:33:55,279 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 10:34:10,756 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 10:34:11,143 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 10:34:15,057 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 10:34:32,359 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:22:01,346 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 13:22:11,240 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:22:11,592 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 13:24:10,390 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 13:24:20,150 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:24:20,404 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 13:24:21,336 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:24:21,391 | ERROR | ui.dashboard | Erro indicadores: 1054 (42S22): Unknown column 'estoque_minimo' in 'where clause'
+2026-06-01 13:32:29,550 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 13:32:40,358 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:32:40,631 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 13:32:45,348 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:32:45,465 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:32:52,791 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:32:55,619 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:32:55,651 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:32:59,937 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:33:02,567 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:33:10,109 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:33:12,125 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:33:12,137 | ERROR | app.historico_service | Erro ao listar histórico: 1054 (42S22): Unknown column 'h.descricao' in 'field list'
+2026-06-01 13:33:19,523 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-01 13:33:20,138 | INFO | app.backup | Backup gerado com sucesso: backup\20260601_133319.sql
+2026-06-01 13:33:22,660 | INFO | ui.dashboard | Backup gerado: backup\20260601_133319.sql
+2026-06-01 13:33:25,245 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260601_133324.pdf
+2026-06-01 13:39:14,571 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-01 13:39:27,923 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:28,180 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-01 13:39:30,249 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:30,319 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:40,704 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:44,977 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:44,988 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:49,422 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:39:49,424 | INFO | app.historico_service | Histórico carregado: 0 registros
+2026-06-01 13:39:57,063 | INFO | app.db | Conexão com banco estabelecida
+2026-06-01 13:40:07,338 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-01 13:40:07,620 | INFO | app.backup | Backup gerado com sucesso: backup\20260601_134007.sql
+2026-06-01 13:40:09,576 | INFO | ui.dashboard | Backup gerado: backup\20260601_134007.sql
+2026-06-01 13:40:13,067 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260601_134012.pdf

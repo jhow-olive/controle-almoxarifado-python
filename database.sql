@@ -24,6 +24,7 @@ CREATE TABLE materiais (
     categoria VARCHAR(80),
     quantidade_total INT DEFAULT 0,
     quantidade_disponivel INT DEFAULT 0,
+    estoque_minimo INT DEFAULT 5,
     status ENUM('DISPONIVEL', 'INDISPONIVEL') DEFAULT 'DISPONIVEL',
     localizacao VARCHAR(80),
     observacao TEXT,

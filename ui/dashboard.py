@@ -96,6 +96,83 @@ def obter_dados_grafico(data_inicio=None, data_fim=None):
 
         conn.close()
 
+def obter_indicadores():
+
+    indicadores = {
+        "materiais": 0,
+        "em_uso": 0,
+        "usuarios": 0,
+        "veiculos": 0
+    }
+
+    conn = conectar()
+
+    try:
+
+        cur = conn.cursor()
+
+        # Total materiais cadastrados
+        cur.execute("""
+            SELECT COUNT(*)
+            FROM materiais
+        """)
+
+        indicadores["materiais"] = cur.fetchone()[0]
+
+        # Saídas abertas
+        cur.execute("""
+            SELECT COUNT(*)
+            FROM saidas
+            WHERE status = 'ABERTO'
+        """)
+
+        indicadores["em_uso"] = cur.fetchone()[0]
+
+        # Usuários ativos
+        cur.execute("""
+            SELECT COUNT(*)
+            FROM usuarios
+            WHERE ativo = 1
+        """)
+
+        indicadores["usuarios"] = cur.fetchone()[0]
+
+        # Veículos cadastrados
+        cur.execute("""
+            SELECT COUNT(*)
+            FROM veiculos
+        """)
+
+        indicadores["veiculos"] = cur.fetchone()[0]
+
+        cur.execute("""
+            SELECT COUNT(*)
+            FROM saida_itens
+            WHERE quantidade > retornado
+        """)
+
+        indicadores["pendencias"] = cur.fetchone()[0]
+
+        cur.execute("""
+            SELECT COUNT(*)
+            FROM materiais
+            WHERE quantidade_disponivel <= estoque_minimo
+        """)
+
+        indicadores["criticos"] = cur.fetchone()[0]
+
+    except Exception as e:
+
+        logger.error(
+            f"Erro indicadores: {e}"
+        )
+
+    finally:
+
+        conn.close()
+
+    return indicadores
+
 
 # =====================================================
 # 📈 GRÁFICO
@@ -342,6 +419,7 @@ class DashboardWindow(QWidget):
             ("🚚 Saída", self.abrir_saida),
             ("↩ Retorno", self.abrir_retorno),
             ("📜 Histórico", self.abrir_historico),
+            ("👥 Usuários", self.abrir_usuarios),
             ("💾 Backup", self.fazer_backup),
             ("📄 Exportar PDF", self.exportar_pdf),
         ]
@@ -474,40 +552,37 @@ class DashboardWindow(QWidget):
         # =================================================
         # CARDS PREMIUM
         # =================================================
-        cards_layout = QGridLayout()
-
-        cards_layout.setSpacing(20)
+        indicadores = obter_indicadores()
 
         card1 = self.criar_card(
             "📦 Materiais",
-            "245",
+            indicadores["materiais"],
             "#3B82F6"
         )
 
         card2 = self.criar_card(
-            "🚚 Em Uso",
-            "38",
+            "🚚 Saídas Abertas",
+            indicadores["em_uso"],
             "#10B981"
         )
 
         card3 = self.criar_card(
             "⚠ Pendências",
-            "12",
+            indicadores["pendencias"],
             "#F59E0B"
         )
 
         card4 = self.criar_card(
-            "👤 Usuários",
-            "7",
+            "🚗 Veículos",
+            indicadores["veiculos"],
             "#EF4444"
         )
 
-        cards_layout.addWidget(card1, 0, 0)
-        cards_layout.addWidget(card2, 0, 1)
-        cards_layout.addWidget(card3, 1, 0)
-        cards_layout.addWidget(card4, 1, 1)
-
-        area.addLayout(cards_layout)
+        card5 = self.criar_card(
+            "⚠ Estoque Crítico",
+            indicadores["criticos"],
+            "#DC2626"
+        )
 
         # =================================================
         # FILTROS
@@ -813,6 +888,12 @@ class DashboardWindow(QWidget):
         self.historico_window = HistoricoWindow()
 
         self.historico_window.show()
+
+    def abrir_usuarios(self):
+        from ui.usuarios import UsuariosWindow
+
+        self.usuarios_window = UsuariosWindow()
+        self.usuarios_window.show()
 
     # =================================================
     # 💾 BACKUP
