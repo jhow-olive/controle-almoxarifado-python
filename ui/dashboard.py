@@ -639,12 +639,10 @@ class DashboardWindow(QWidget):
             0
         )
 
+        cards_layout = QGridLayout()
+
         cards_layout.setHorizontalSpacing(20)
         cards_layout.setVerticalSpacing(20)
-
-        cards_layout.setColumnStretch(0, 1)
-        cards_layout.setColumnStretch(1, 1)
-        cards_layout.setColumnStretch(2, 1)
 
         cards_layout.addWidget(card1, 0, 0)
         cards_layout.addWidget(card2, 0, 1)
@@ -655,10 +653,7 @@ class DashboardWindow(QWidget):
         cards_layout.addWidget(card6, 1, 2)
 
         area.addLayout(cards_layout)
-
-        cards_layout.setContentsMargins(
-            0, 0, 0, 0
-        )
+    
 
         cards_layout.setSpacing(20)
 
@@ -768,48 +763,47 @@ class DashboardWindow(QWidget):
 
         card = QFrame()
 
-        card.setFixedHeight(140)
-        card.setMinimumWidth(280)
+        card.setFixedHeight(150)
 
         card.setStyleSheet(f"""
             QFrame {{
                 background-color: #1E293B;
-                border-radius: 22px;
+                border-radius: 20px;
                 border: 1px solid #334155;
-            }}
-
-            QFrame:hover {{
-                border: 2px solid {cor};
             }}
         """)
 
         layout = QVBoxLayout(card)
 
-        layout = QVBoxLayout(card)
-
-        layout.setContentsMargins(
-            16,
-            16,
-            16,
-            16
-        )
-
+        layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(8)
 
         titulo_label = QLabel(titulo)
 
+        titulo_label.setAlignment(Qt.AlignLeft)
+
         titulo_label.setStyleSheet("""
-            color: #94A3B8;
-            font-size: 14px;
-            font-weight: 500;
+            QLabel{
+                color:#94A3B8;
+                font-size:14px;
+                font-weight:500;
+                background:transparent;
+                border:none;
+            }
         """)
 
         valor_label = QLabel(str(valor))
 
+        valor_label.setAlignment(Qt.AlignLeft)
+
         valor_label.setStyleSheet(f"""
-            color: {cor};
-            font-size: 38px;
-            font-weight: bold;
+            QLabel {{
+                color:{cor};
+                font-size:38px;
+                font-weight:bold;
+                background:transparent;
+                border:none;
+            }}
         """)
 
         linha = QFrame()
@@ -817,18 +811,15 @@ class DashboardWindow(QWidget):
         linha.setFixedHeight(4)
 
         linha.setStyleSheet(f"""
-            background-color: {cor};
-            border-radius: 2px;
+            background-color:{cor};
+            border:none;
+            border-radius:2px;
         """)
 
         layout.addWidget(titulo_label)
-
-        layout.addSpacing(10)
-
+        layout.addStretch()
         layout.addWidget(valor_label)
-
-        layout.addSpacing(10)
-
+        layout.addStretch()
         layout.addWidget(linha)
 
         return card, valor_label
@@ -908,6 +899,7 @@ class DashboardWindow(QWidget):
             elementos.append(Spacer(1,20))
 
             indicadores = obter_indicadores()
+            print(indicadores)
 
             elementos.append(
                 Paragraph(

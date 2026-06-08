@@ -179,3 +179,95 @@
 2026-06-01 17:29:32,679 | INFO | app.db | Conexão com banco estabelecida
 2026-06-01 17:29:32,750 | INFO | app.db | Conexão com banco estabelecida
 2026-06-01 17:29:32,832 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:36:35,668 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-08 11:37:02,588 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:02,877 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-08 11:37:04,339 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:04,463 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:04,575 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:25,254 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:28,772 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:28,786 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:31,195 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:33,935 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:36,176 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:38,835 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:42,720 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-08 11:37:43,044 | INFO | app.backup | Backup gerado com sucesso: backup\20260608_113742.sql
+2026-06-08 11:37:43,938 | INFO | ui.dashboard | Backup gerado: backup\20260608_113742.sql
+2026-06-08 11:37:44,941 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:37:45,277 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260608_113744.pdf
+2026-06-08 11:38:33,300 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:38:33,339 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:38:33,393 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:38:33,449 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:39:53,150 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-08 11:40:06,016 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:06,263 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-08 11:40:07,363 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:07,464 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:07,544 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:10,302 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:12,528 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:12,549 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:14,901 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:17,008 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:19,518 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:22,410 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:24,520 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-08 11:40:24,725 | INFO | app.backup | Backup gerado com sucesso: backup\20260608_114024.sql
+2026-06-08 11:40:26,009 | INFO | ui.dashboard | Backup gerado: backup\20260608_114024.sql
+2026-06-08 11:40:26,963 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:27,239 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260608_114026.pdf
+2026-06-08 11:40:34,348 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:34,392 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:34,439 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 11:40:34,460 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:10:11,368 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-08 13:10:19,866 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:10:20,144 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-08 13:10:21,424 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:10:21,588 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:10:21,685 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:10:55,121 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-08 13:11:02,123 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:02,381 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-08 13:11:03,239 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:03,330 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:03,417 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:05,482 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:09,217 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:09,250 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:12,428 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:15,136 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:18,248 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:20,576 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-08 13:11:20,908 | INFO | app.backup | Backup gerado com sucesso: backup\20260608_131120.sql
+2026-06-08 13:11:21,988 | INFO | ui.dashboard | Backup gerado: backup\20260608_131120.sql
+2026-06-08 13:11:23,131 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:23,464 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260608_131123.pdf
+2026-06-08 13:11:33,444 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:33,500 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:11:33,532 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:42:43,159 | INFO | __main__ | Controle de Almoxarifado iniciado
+2026-06-08 13:42:51,880 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:42:52,130 | INFO | app.auth | Login realizado com sucesso: admin
+2026-06-08 13:42:53,369 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:42:53,468 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:42:53,566 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:01,079 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:04,151 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:04,168 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:06,826 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:08,766 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:10,844 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:12,979 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:16,834 | INFO | app.backup | Iniciando backup do banco: almoxarifado
+2026-06-08 13:43:17,059 | INFO | app.backup | Backup gerado com sucesso: backup\20260608_134316.sql
+2026-06-08 13:43:17,981 | INFO | ui.dashboard | Backup gerado: backup\20260608_134316.sql
+2026-06-08 13:43:18,882 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:19,222 | INFO | ui.dashboard | PDF gerado: relatorios\dashboard_20260608_134318.pdf
+2026-06-08 13:43:35,910 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:35,941 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:35,969 | INFO | app.db | Conexão com banco estabelecida
+2026-06-08 13:43:36,004 | INFO | app.db | Conexão com banco estabelecida
